@@ -1,0 +1,201 @@
+/* Contenedor del dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Botón del dropdown */
+.dropbtn {
+    background-color: #4CAF50; /* color del botón */
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Contenido del dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links dentro del dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover sobre los links */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Mostrar el dropdown al hacer hover sobre el botón */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Opcional: cambiar color del botón al hover */
+.dropdown:hover .dropbtn {
+    background-color: #45a049;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f6f9;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Barra lateral */
+/* sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #2c3e50;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    min-height: 100vh; /* importante para que margin-top:auto funcione */
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin: 0 0 18px;
+}
+
+/* menú superior */
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar .menu li { margin: 8px 0; }
+.sidebar .menu li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+.sidebar .menu li a:hover { background-color: #34495e; }
+
+/* Volver: separado del menú */
+/* Contenedor de botones inferiores */
+.bottom-buttons {
+    margin-top: auto;  /* empuja todo este bloque al fondo */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* separación entre Volver y Salir */
+}
+
+/* Volver */
+.volver a {
+    display: block;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    background: #eb3a26; /* naranja */
+    padding: 10px;
+    border-radius: 4px;
+}
+.volver a:hover {
+    background: #c0392b;
+}
+
+/* Salir */
+.logout a {
+    display: block;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    background: #eb3a26; /* rojo */
+    padding: 10px;
+    border-radius: 4px;
+}
+.logout a:hover {
+    background: #c0392b;
+}
+
+
+
+/* Contenido principal */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+/* Estilo general para los botones de acciones */
+table td.acciones .btn {
+    display: inline-block;
+    margin: 2px 3px;
+    padding: 5px 8px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    line-height: 22px;
+}
+
+/* Botón Editar */
+table td.acciones .btn.editar { background-color: #27ae60; }
+table td.acciones .btn.editar:hover { background-color: #1e8449; }
+
+/* Botón Borrar */
+table td.acciones .btn.eliminar { background-color: #e74c3c; }
+table td.acciones .btn.eliminar:hover { background-color: #c0392b; }
+
+/* Botón Imprimir */
+table td.acciones .btn.imprimir { background-color: #3498db; }
+table td.acciones .btn.imprimir:hover { background-color: #2980b9; }
+
+
