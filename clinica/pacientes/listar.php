@@ -15,16 +15,16 @@ if ($conn->connect_error) {
 $search = "";
 if(isset($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);
-    $sql = "SELECT id, nombre, apellido, dni, telefono, email, direccion 
+    $sql = "SELECT id_paciente, nombre, apellido, dni, telefono, email, id_direcciones 
             FROM pacientes 
             WHERE nombre LIKE '%$search%' 
                OR apellido LIKE '%$search%' 
                OR dni LIKE '%$search%' 
                OR telefono LIKE '%$search%' 
                OR email LIKE '%$search%' 
-               OR direccion LIKE '%$search%'";
+               OR id_direcciones LIKE '%$search%'";
 } else {
-    $sql = "SELECT id, nombre, apellido, dni, telefono, email, direccion FROM pacientes";
+    $sql = "SELECT id_paciente, nombre, apellido, dni, telefono, email, id_direcciones FROM pacientes";
 }
 
 $result = $conn->query($sql);
@@ -80,7 +80,6 @@ $result = $conn->query($sql);
                         <th>DNI</th>
                         <th>Teléfono</th>
                         <th>Email</th>
-                        <th>Dirección</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -89,17 +88,16 @@ $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
                             echo "<tr>
-                                <td>".$row['id']."</td>
+                                <td>".$row['id_paciente']."</td>
                                 <td>".$row['nombre']."</td>
                 <td>".$row['apellido']."</td>
                 <td>".$row['dni']."</td>
                 <td>".$row['telefono']."</td>
                 <td>".$row['email']."</td>
-                <td>".$row['direccion']."</td>
                 <td class='acciones'>
-                    <a href='editar.php?id=".$row['id']."' class='btn editar' title='Editar'>✏️</a>
-                    <a href='eliminar.php?id=".$row['id']."' class='btn eliminar' onclick=\"return confirm('¿Seguro que quieres borrar este paciente?');\" title='Borrar'>🗑️</a>
-                    <a href='imprimir.php?id=".$row['id']."' class='btn imprimir' target='_blank' title='Imprimir'>🖨️</a>
+                    <a href='editar.php?id=".$row['id_paciente']."' class='btn editar' title='Editar'>✏️</a>
+                    <a href='eliminar.php?id=".$row['id_paciente']."' class='btn eliminar' onclick=\"return confirm('¿Seguro que quieres borrar este paciente?');\" title='Borrar'>🗑️</a>
+                    <a href='imprimir.php?id=".$row['id_paciente']."' class='btn imprimir' target='_blank' title='Imprimir'>🖨️</a>
                 </td>
               </tr>";
     }
