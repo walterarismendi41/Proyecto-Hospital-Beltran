@@ -12,9 +12,9 @@ if ($conn->connect_error) {
 }
 
 // Obtener el paciente por ID
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM pacientes WHERE id=$id";
+if (isset($_GET['id_paciente'])) {
+    $id = (int) $_GET['id_paciente']; // lo forzamos a número para seguridad
+    $sql = "SELECT * FROM pacientes WHERE id_paciente = $id";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
@@ -24,14 +24,14 @@ if (isset($_GET['id'])) {
         exit;
     }
 } else {
-    echo "ID no proporcionado.";
+    echo "ID de paciente no proporcionado.";
     exit;
 }
 
 // Procesar eliminación
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['confirmar'])) {
-        $sql = "DELETE FROM pacientes WHERE id=$id";
+        $sql = "DELETE FROM pacientes WHERE id_paciente = $id";
         if ($conn->query($sql) === TRUE) {
             header("Location: listar.php");
             exit;
@@ -54,24 +54,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <!-- Menú lateral -->
-               <aside class="sidebar">
-    <h2>Hospital Beltrán</h2>
-
-    <ul class="menu">
-        <li><a href="listar.php">Listar</a></li>
-        <li><a href="agregar.php">Agregar</a></li>
-    </ul>
-
-    <!-- Bloque inferior -->
-    <div class="bottom-buttons">
-        <div class="volver">
-            <a href="../principal.php">Volver</a>
-        </div>
-        <div class="logout">
-            <a href="../logout.php">Salir</a>
-        </div>
-    </div>
-</aside>
+        <aside class="sidebar">
+            <h2>Hospital Beltrán</h2>
+            <ul class="menu">
+                <li><a href="listar.php">Listar</a></li>
+                <li><a href="agregar.php">Agregar</a></li>
+            </ul>
+            <div class="bottom-buttons">
+                <div class="volver">
+                    <a href="../principal.php">Volver</a>
+                </div>
+                <div class="logout">
+                    <a href="../logout.php">Salir</a>
+                </div>
+            </div>
+        </aside>
 
         <!-- Contenido principal -->
         <main class="main-content">
