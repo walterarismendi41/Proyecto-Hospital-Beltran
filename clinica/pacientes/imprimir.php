@@ -11,14 +11,20 @@ if ($conn->connect_error) {
 }
 
 // Verificar que se envió un ID
-if(!isset($_GET['id'])) {
+if(!isset($_GET['id_paciente'])) {
     die("ID de paciente no proporcionado.");
 }
 
-$id = $conn->real_escape_string($_GET['id']);
+// Forzar a entero por seguridad
+$id = (int)$_GET['id_paciente'];
 
-// Obtener los datos del paciente
-$sql = "SELECT * FROM pacientes WHERE id = $id";
+// Consulta con JOIN a direcciones y localidades
+$sql = "SELECT p.*, d.calle, d.altura, l.localidad, l.codigo_postal
+        FROM pacientes p
+        LEFT JOIN direcciones d ON p.id_direcciones = d.id_direcciones
+        LEFT JOIN localidades l ON d.id_localidad = l.id_localidad
+        WHERE p.id_paciente = $id";
+
 $result = $conn->query($sql);
 
 if($result->num_rows == 0) {
@@ -45,7 +51,7 @@ $paciente = $result->fetch_assoc();
         button { padding: 10px 25px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
         button:hover { background-color: #9f2b29ff; }
         @media print {
-            body { background-color: #fff; }
+            body { background-color: #fff; -webkit-print-color-adjust: exact; }
             .print-button { display: none; }
         }
     </style>
@@ -63,7 +69,17 @@ $paciente = $result->fetch_assoc();
             <tr><th>DNI</th><td><?php echo $paciente['dni']; ?></td></tr>
             <tr><th>Teléfono</th><td><?php echo $paciente['telefono']; ?></td></tr>
             <tr><th>Email</th><td><?php echo $paciente['email']; ?></td></tr>
-            <tr><th>Dirección</th><td><?php echo $paciente['direccion']; ?></td></tr>
+            <tr><th>Dirección</th>
+                <td>
+                    <?php 
+                        if ($paciente['calle']) {
+                            echo $paciente['calle']." ".$paciente['altura'].", ".$paciente['localidad']." (CP ".$paciente['codigo_postal'].")";
+                        } else {
+                            echo "Sin dirección registrada";
+                        }
+                    ?>
+                </td>
+            </tr>
         </table>
 
         <div class="print-button">
