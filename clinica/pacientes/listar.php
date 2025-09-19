@@ -95,9 +95,10 @@ $result = $conn->query($sql);
                 <td>".$row['telefono']."</td>
                 <td>".$row['email']."</td>
                 <td class='acciones'>
-                    <a href='editar.php?id=".$row['id_paciente']."' class='btn editar' title='Editar'>✏️</a>
-                    <a href='eliminar.php?id=".$row['id_paciente']."' class='btn eliminar' onclick=\"return confirm('¿Seguro que quieres borrar este paciente?');\" title='Borrar'>🗑️</a>
-                    <a href='imprimir.php?id=".$row['id_paciente']."' class='btn imprimir' target='_blank' title='Imprimir'>🖨️</a>
+                    <a href='editar.php?id_paciente=".$row['id_paciente']."' class='btn editar' title='Editar'>✏️</a>
+                    <a href='eliminar.php?id_paciente=".$row['id_paciente']."' class='btn eliminar' onclick=\"return confirm('¿Seguro que quieres borrar este paciente?');\" title='Borrar'>🗑️</a>
+                    <a href='imprimir.php?id_paciente=".$row['id_paciente']."' class='btn imprimir' target='_blank' title='Imprimir'>🖨️</a>
+
                 </td>
               </tr>";
     }
