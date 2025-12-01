@@ -15,7 +15,7 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <div class="fondo"></div>
     <div class="main-container">
-        <h1>UPPS, ACA TAMBIÉN ESTAMOS TRABAJANDO EN LA SESIÓN</h1>
+        <h1>ESTAMOS TRABAJANDO EN ESTA SECCIÓN</h1>
 
         <!-- Logo centrado -->
         <div class="logo-container">

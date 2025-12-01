@@ -35,6 +35,7 @@ if (isset($_GET['id_paciente'])) {
 
 // Procesar el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $dni = $_POST['dni'];
@@ -42,8 +43,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $calle = $_POST['calle'];
     $altura = $_POST['altura'];
-    $localidad = $_POST['localidad'];
-    $codigo_postal = $_POST['codigo_postal'];
+    $codigo_postal = intval($_POST['codigo_postal']);
+    $nueva_localidad = trim($_POST['nueva_localidad']);
+
+    // 1. Buscar si ya existe ese código postal
+    $sqlBuscar = "SELECT id_localidad FROM localidades WHERE codigo_postal = $codigo_postal";
+    $result = $conn->query($sqlBuscar);
+
+    if ($result->num_rows > 0) {
+        // Ya existe
+        $fila = $result->fetch_assoc();
+        $id_localidad = $fila['id_localidad'];
+    } else {
+        // No existe → se crea solo si el usuario escribió una localidad
+        if (!empty($nueva_localidad)) {
+            $sqlInsert = "INSERT INTO localidades (localidad, codigo_postal)
+                          VALUES ('$nueva_localidad', $codigo_postal)";
+            $conn->query($sqlInsert);
+            $id_localidad = $conn->insert_id;
+        } else {
+            echo "Error: El código postal no existe y no ingresaste una nueva localidad.";
+            exit;
+        }
+    }
+
 
     // Actualizar tabla pacientes
     $sql1 = "UPDATE pacientes 
@@ -51,20 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
              WHERE id_paciente=$id";
     $conn->query($sql1);
 
-    // Actualizar tabla direcciones
+    // Actualizar tabla direcciones CON nueva localidad si cambia el CP
     if (!empty($paciente['id_direcciones'])) {
         $sql2 = "UPDATE direcciones 
-                 SET calle='$calle', altura='$altura'
-                 WHERE id_direcciones={$paciente['id_direcciones']}";
+                SET calle='$calle', 
+                    altura='$altura', 
+                    id_localidad=$id_localidad
+                WHERE id_direcciones={$paciente['id_direcciones']}";
         $conn->query($sql2);
-
-        // Actualizar tabla localidades
-        if (!empty($paciente['id_localidad'])) {
-            $sql3 = "UPDATE localidades 
-                     SET localidad='$localidad', codigo_postal='$codigo_postal' 
-                     WHERE id_localidad={$paciente['id_localidad']}";
-            $conn->query($sql3);
-        }
     }
 
     header("Location: listar.php");
@@ -126,16 +143,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>Altura</label>
             </div>
             <div class="form-group">
-                <input type="text" name="localidad" value="<?php echo htmlspecialchars($paciente['localidad']); ?>">
-                <label>Localidad</label>
-            </div>
-            <div class="form-group">
-                <input type="text" name="codigo_postal" value="<?php echo htmlspecialchars($paciente['codigo_postal']); ?>">
+                <input type="text" name="codigo_postal" value="<?php echo htmlspecialchars($paciente['codigo_postal']); ?>" required>
                 <label>Código Postal</label>
             </div>
+
+            <div class="form-group">
+                <input type="text" name="nueva_localidad" placeholder="solo si cambia de CP">
+                <label>Localidad</label>
+            </div>
+
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Actualizar</button>
-                <a href="listar.php" class="btn-secondary">Cancelar</a>
+                <button href="listar.php" class="btn-secondary">Cancelar</button>
             </div>
         </form>
     </main>

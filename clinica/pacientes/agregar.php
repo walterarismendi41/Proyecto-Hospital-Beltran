@@ -86,12 +86,12 @@ function mostrarCodigoPostal() {
             <div class="form-group"><input type="text" name="telefono" required placeholder=" "><label>Teléfono</label></div>
             <div class="form-group"><input type="email" name="email" placeholder=" "><label>Email</label></div>
 
-            <h3>Dirección</h3>
+            <h2>Dirección</h2>
             <div class="form-group"><input type="text" name="calle" required placeholder=" "><label>Calle</label></div>
             <div class="form-group"><input type="text" name="altura" required placeholder=" "><label>Altura</label></div>
 
             <div class="form-group">
-                <label>Localidad</label>
+                
                 <select name="id_localidad" id="id_localidad" onchange="mostrarCodigoPostal()" required>
                     <option value="">Selecciona una localidad</option>
                     <?php
@@ -99,16 +99,16 @@ function mostrarCodigoPostal() {
                         echo "<option value='".$loc['id_localidad']."' data-cp='".$loc['codigo_postal']."'>".$loc['localidad']."</option>";
                     }
                     ?>
-                </select>
+                </select><label>Localidad</label>
             </div>
 
             <div class="form-group">
-                <input type="text" id="codigo_postal" placeholder="Código Postal" readonly>
+                <input type="text" id="codigo_postal" placeholder=" " readonly><label>Codigo postal</label>
             </div>
 
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Guardar</button>
-                <a href="listar.php" class="btn-secondary">Cancelar</a>
+                <button href="listar.php" class="btn-secondary">Cancelar</button>
             </div>
         </form>
     </main>
